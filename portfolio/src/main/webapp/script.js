@@ -26,3 +26,21 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+const addToPortfolioPage = async () => {
+    try {
+      const response = await fetch('/data');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.text();
+  
+      const greetingContainer = document.getElementById("greeting-container");
+      const pTag = document.createElement("p");
+      pTag.innerText = data;
+      greetingContainer.appendChild(pTag);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  
