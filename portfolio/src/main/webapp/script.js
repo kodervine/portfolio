@@ -33,7 +33,8 @@ const addToPortfolioPage = async () => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data = await response.text();
+    //   const data = await response.text();
+    const data = await response.json();
   
       const greetingContainer = document.getElementById("greeting-container");
       const pTag = document.createElement("p");
