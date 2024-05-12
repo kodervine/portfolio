@@ -29,12 +29,15 @@ function addRandomGreeting() {
 
 const addToPortfolioPage = async () => {
     try {
-      const response = await fetch('/data');
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
-      }
-    //   const data = await response.text();
+    const maxComments = document.getElementById('max-comments').value;
+
+    const response = await fetch(`/data?maxComments=${maxComments}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
     const data = await response.json();
+    //   const data = await response.text();
   
       const greetingContainer = document.getElementById("greeting-container");
       const pTag = document.createElement("p");

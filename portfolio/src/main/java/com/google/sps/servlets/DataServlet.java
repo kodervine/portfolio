@@ -35,34 +35,42 @@ public class DataServlet extends HttpServlet {
     
     Query query = new Query("Comment");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // response.setContentType("text/html;");
-    // response.getWriter().println("Hello from the server, Chinenye!");
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String maxCommentsParam = request.getParameter("maxComments");
+    int maxComments = 3;
+    try {
+        maxComments = Integer.parseInt(maxCommentsParam);
+    } catch (NumberFormatException e) {
+        maxComments = 3;
+    }
+
     dataList.clear();
+
+    PreparedQuery results = datastore.prepare(query);
+    int commentCount = 0;
     for (Entity entity : results.asIterable()) {
+        if (commentCount >= maxComments) {
+            break; 
+        }
         String commentText = (String) entity.getProperty("commentText");
         dataList.add(commentText);
-      }
-   
+        commentCount++;
+    }
+
     Gson gson = new Gson();
     String json = gson.toJson(dataList);
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
-  }
+}
+
   
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String commentText = request.getParameter("text-input");
-   
-    dataList.add(commentText);
-    Gson gson = new Gson();
-    String json = gson.toJson(dataList);
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("commentText", commentText);
-
     datastore.put(commentEntity);
   
     response.sendRedirect("/");
