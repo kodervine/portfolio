@@ -26,19 +26,30 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
     ArrayList<String> dataList = new ArrayList<String>();
-    
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // response.setContentType("text/html;");
     // response.getWriter().println("Hello from the server, Chinenye!");
-    dataList.add("Chinenye , ");
-    dataList.add("Developer , ");
-    dataList.add("Okay then . ");
-   
     Gson gson = new Gson();
     String json = gson.toJson(dataList);
 
+    response.setContentType("application/json;");
     response.getWriter().println(json);
   }
+  
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String commentText = request.getParameter("text-input");
+   
+    dataList.add(commentText);
+    Gson gson = new Gson();
+    String json = gson.toJson(dataList);
+
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  
+    response.sendRedirect("/");
+   }
+
 }
 
