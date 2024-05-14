@@ -31,6 +31,12 @@ const addToPortfolioPage = async () => {
     try {
     const maxComments = document.getElementById('max-comments').value;
 
+    await fetch("/delete-data");
+
+    if (!response.ok){
+        throw new Error('Failed to delete comments data');
+    }
+ 
     const response = await fetch(`/data?maxComments=${maxComments}`);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
