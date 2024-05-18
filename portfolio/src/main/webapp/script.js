@@ -31,12 +31,6 @@ const addToPortfolioPage = async () => {
     try {
     const maxComments = document.getElementById('max-comments').value;
 
-    await fetch("/delete-data");
-
-    if (!response.ok){
-        throw new Error('Failed to delete comments data');
-    }
- 
     const response = await fetch(`/data?maxComments=${maxComments}`);
     if (!response.ok) {
       throw new Error('Failed to fetch data');
@@ -46,6 +40,8 @@ const addToPortfolioPage = async () => {
     //   const data = await response.text();
   
       const greetingContainer = document.getElementById("greeting-container");
+      greetingContainer.innerHTML = '';
+      
       const pTag = document.createElement("p");
       pTag.innerText = data;
       greetingContainer.appendChild(pTag);
@@ -54,3 +50,28 @@ const addToPortfolioPage = async () => {
     }
   }
   
+
+  const deleteComments = async () => {
+    try {
+    const maxComments = document.getElementById('max-comments').value;
+
+    const deleteResponse = await fetch("/delete-data", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
+  
+      if (!deleteResponse.ok) {
+        console.log(deleteResponse);
+        throw new Error('Failed to delete comments data');
+      }  
+
+      if (deleteResponse.ok) {
+    await addToPortfolioPage()        
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }

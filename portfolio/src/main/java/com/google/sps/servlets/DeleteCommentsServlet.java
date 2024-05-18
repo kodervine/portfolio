@@ -33,8 +33,21 @@ public class DeleteCommentsServlet extends HttpServlet {
     Query query = new Query("Comment");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+    // @Override
+    // public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    //     response.setContentType("application/json");
+    //     response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    //     response.getWriter().println(new Gson().toJson("GET method is not supported for this URL. Please use POST."));
+    // }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_OK);
+        // No need to write anything to the response body
+    }
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
         try {
             Query query = new Query("Comment");
             PreparedQuery results = datastore.prepare(query);
