@@ -29,6 +29,10 @@ function addRandomGreeting() {
 
 const addToPortfolioPage = async () => {
     try {
+    const authResponse = await fetch("/account");
+
+      const authData = await authResponse.text();
+      console.log(authData)
     const maxComments = document.getElementById('max-comments').value;
 
     const response = await fetch(`/data?maxComments=${maxComments}`);
@@ -37,14 +41,15 @@ const addToPortfolioPage = async () => {
     }
 
     const data = await response.json();
-    //   const data = await response.text();
-  
-      const greetingContainer = document.getElementById("greeting-container");
-      greetingContainer.innerHTML = '';
-      
-      const pTag = document.createElement("p");
-      pTag.innerText = data;
-      greetingContainer.appendChild(pTag);
+    const commentsContainer = document.getElementById("comments-container");
+    commentsContainer.innerHTML = '';
+
+    data.forEach(comment => {
+        const pTag = document.createElement("p");
+        pTag.innerText = comment;
+        pTag.classList.add('comment'); 
+        commentsContainer.appendChild(pTag);
+    });
     } catch (error) {
       console.error('Error fetching data:', error);
     }

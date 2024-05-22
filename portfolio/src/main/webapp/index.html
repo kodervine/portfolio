@@ -2,33 +2,37 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Chinenye's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body onload="addToPortfolioPage()">
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <img src="/images/not_found.jpg" style="height: 100px; width: 100px"/>
-      <!-- <p id="greet-chinenye" onclick="addToPortfolioPage()">Fetch comments</p> -->
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Greet</button>
-      <button onclick="deleteComments()">Delete Comments</button>
-      <div id="greeting-container"></div>
+    <div class="container">
+        <header class="header">
+            <img src="/images/profile-pic.jpg" alt="Your Image" class="profile-img">
+            <h1>Chinenye Anikwenze</h1>
+            <p class="role">Frontend engineer</p>
+        </header>
+        
+        <section class="portfolio-content">
+            <h2 onload="addToPortfolioPage()" id="greeting-container"></h2>
+            <button onclick="addRandomGreeting()">Greet</button>
+        </section>
 
-    <form action="/data" method="POST">
-        <p>Enter your comment to my portfolio:</p>
-        <textarea name="text-input"></textarea>
-        <br/><br/>
-
-        <input type="submit" />
-      </form>
-      <div>
-        <label for="max-comments">Maximum number of comments:</label>
-        <input type="number" id="max-comments" name="max-comments" min="1" value="10"> <!-- Input field for the user to specify the maximum number of comments -->
-        <button onclick="addToPortfolioPage()">Refresh Comments</button> <!-- Button to trigger the refresh of comments -->
-    </div>
+        <section class="comments-section"> 
+            <h2>Leave a Comment</h2> 
+            <form action="/data" method="POST">
+                <textarea name="text-input" placeholder="Enter your comment..."></textarea>
+                <input type="submit" value="Submit" class="submit-btn">
+            </form>
+            <div class="comment-settings">
+                <label for="max-comments">Select no of comments to view:</label>
+                <input type="number" id="max-comments" name="max-comments" min="1" value="10">
+                <button onclick="addToPortfolioPage()">Refresh Comments</button>
+                <button onclick="deleteComments()">Delete Comments</button>
+            </div>
+            <div id="comments-container"></div>
+        </section>
     </div>
   </body>
 </html>
