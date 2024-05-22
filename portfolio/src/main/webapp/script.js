@@ -13,6 +13,7 @@
 // limitations under the License.
 
 /**
+ * clip < ~/.ssh/gCloudKe.pub
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
@@ -47,14 +48,27 @@ const addToPortfolioPage = async () => {
     }
 
     const data = await response.json();
+    console.log("Data", data)
     const commentsContainer = document.getElementById("comments-container");
     commentsContainer.innerHTML = '';
 
     data.forEach(comment => {
-        const pTag = document.createElement("p");
-        pTag.innerText = comment;
-        pTag.classList.add('comment'); 
-        commentsContainer.appendChild(pTag);
+        const commentDiv = document.createElement("div");
+        commentDiv.classList.add('comment');
+    
+        const usernameP = document.createElement("p");
+        usernameP.innerText = `Username: ${comment.username}`;
+        commentDiv.appendChild(usernameP);
+    
+        const userEmailP = document.createElement("p");
+        userEmailP.innerText = `Email: ${comment.userEmail}`;
+        commentDiv.appendChild(userEmailP);
+    
+        const commentP = document.createElement("p");
+        commentP.innerText = `Comment: ${comment.comment}`;
+        commentDiv.appendChild(commentP);
+    
+        commentsContainer.appendChild(commentDiv);
     });
     } catch (error) {
       console.error('Error fetching data:', error);

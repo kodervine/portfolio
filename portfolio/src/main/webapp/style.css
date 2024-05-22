@@ -100,3 +100,9 @@ textarea {
     border-left: 3px solid #007bff;
     border-radius: 5px;
 }
+
+.comments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
