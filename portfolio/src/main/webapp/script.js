@@ -29,10 +29,16 @@ function addRandomGreeting() {
 
 const addToPortfolioPage = async () => {
     try {
-    const authResponse = await fetch("/account");
-
-      const authData = await authResponse.text();
-      console.log(authData)
+        const authResponse = await fetch("/account");
+        const authData = await authResponse.json();
+        console.log(authData);
+        
+        // Check if the user is logged in
+        if (!authData.isLoggedIn) {
+            
+          window.location.href = authData.redirectLink;
+            return;
+        }
     const maxComments = document.getElementById('max-comments').value;
 
     const response = await fetch(`/data?maxComments=${maxComments}`);
